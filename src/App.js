@@ -3,21 +3,24 @@ import {Routes,Route} from "react-router-dom"
 import HomePage from './Pages/HomePage';
 import { useState } from 'react';
 
-const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT
+const serverEndpoint = process.env.REACT_APP_URL_ENDPOINT
+// REACT_APP_URL_ENDPOINT = https://server-deploy123.herokuapp.com
+// REACT_APP_URL_ENDPOINT= http://localhost:4000
 function App() {
   const [clientMessage,setClientMessage] = useState('')
   const [serverMessage,setServerMessage] = useState('')
-
+  // console.log(serverEndpoint)
   const sendReceiveMessage = async () => {
-    const url = `${urlEndpoint}/post-message`
+    const url = `${serverEndpoint}/post-message`
     const resMessage = await fetch(url, {
-      Method:"POST",
-      Headers: {
+      method: "POST",
+      headers: {
         "content-type":"application/json"
       },
-      Body:JSON.stringify({clientMessage})
+      body: JSON.stringify({clientMessage})
     })
     const resJSON = await resMessage.json()
+    // console.log(resJSON.message)
     setServerMessage(resJSON.serverMessage)
   }
   return (
